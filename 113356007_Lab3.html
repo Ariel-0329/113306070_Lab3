@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>113356007_Lab3_Number Guessing Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f9;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .game-result img {
+      max-width: 200px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>113356007_Lab3_Number Guessing Game</h1>
+  <div id="game-container">
+    <div id="instructions"></div>
+    <div class="game-result"></div>
+  </div>
+  <script>
+    
+    const maxAttempts = 7;
+    const targetNumber = Math.floor(Math.random() * 100) + 1; // 隨機生成 1~100 的數字
+    let remainingAttempts = maxAttempts;
+    let lowerBound = 1;
+    let upperBound = 100;
+
+    
+    while (remainingAttempts > 0) {
+      const userGuess = window.prompt(
+        `請輸入一個 ${lowerBound} 到 ${upperBound} 的數字。\n剩餘次數：${remainingAttempts}`
+      );
+
+      
+      if (userGuess === null || userGuess.trim() === "" || isNaN(userGuess)) {
+        alert("請輸入有效的數字！");
+        continue;
+      }
+
+      const guess = Number(userGuess);
+
+      if (guess <= lowerBound || guess >= upperBound) {
+        alert(
+          `請輸入有效範圍內的數字！(不能選擇範圍的上下限)`
+        );
+        continue;
+      }
+
+      
+      if (guess === targetNumber) {
+        alert("恭喜你答對了！");
+        document.querySelector(
+          ".game-result"
+        ).innerHTML = `<img src="correct.jpg" alt="Correct">`;
+        break;
+      } else if (guess < targetNumber) {
+        alert("猜的數字太小了！");
+        lowerBound = guess; 
+      } else {
+        alert("猜的數字太大了！");
+        upperBound = guess; 
+      }
+
+      remainingAttempts--;
+    }
+
+    
+    if (remainingAttempts === 0) {
+      alert(`很遺憾，次數用完了！正確答案是 ${targetNumber}`);
+      document.querySelector(
+        ".game-result"
+      ).innerHTML = `<img src="wrong.jpg" alt="Wrong">`;
+    }
+  </script>
+</body>
+</html>
